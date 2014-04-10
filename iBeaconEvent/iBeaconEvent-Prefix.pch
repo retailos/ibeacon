@@ -14,3 +14,12 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+#define PureSingleton(className) \
++ (className *)shared { \
+static className *__main; \
+static dispatch_once_t onceToken; \
+dispatch_once(&onceToken, ^{ __main = [[className alloc] init]; }); \
+return __main; }
+
+#define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)

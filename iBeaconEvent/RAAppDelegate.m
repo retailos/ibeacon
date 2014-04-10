@@ -7,14 +7,22 @@
 //
 
 #import "RAAppDelegate.h"
+#import "MainViewController.h"
+#import "BeaconServices.h"
 
 @implementation RAAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [BeaconServices setupBeacons:@[@"42946",@"31891",@"15692"]];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+ 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    MainViewController *vc = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
+    
+    [self.window setRootViewController:vc];
+    self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
     return YES;
 }
