@@ -26,15 +26,15 @@
     
     //ROTATE THE VIEW
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextConcatCTM(ctx, CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(-10)));
-    CGContextConcatCTM(ctx, CGAffineTransformMakeTranslation(-10, 40));
+    CGContextConcatCTM(ctx, CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(5)));
+    CGContextConcatCTM(ctx, CGAffineTransformMakeTranslation(10, 28));
     
     CGRect titleRect = CGRectMake(0, 0, rect.size.width, 100.0f);
     NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     UIFont *font = [UIFont fontWithName:@"Lobster" size:22.0f];
     [style setAlignment:NSTextAlignmentCenter];
     NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:font,NSFontAttributeName,style,NSParagraphStyleAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil];
-    [@"Thinking about iBeacons?" drawInRect:titleRect withAttributes:attr];
+    [@"Talking about iBeacons?" drawInRect:titleRect withAttributes:attr];
     
     
 }

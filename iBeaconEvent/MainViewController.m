@@ -12,11 +12,13 @@
 #import "GlassView.h"
 #import "TitleView.h"
 #import "FinishView.h"
+#import "ThoughtView.h"
 #import "EAGLView.h"
 #import "ES1Renderer.h"
 #import "ParticleEmitter.h"
 #import "UIImage+ResizeMagick.h"
 #import "AFNetworking.h"
+#import "PBWebViewController.h"
 
 
 @interface MainViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
@@ -24,6 +26,7 @@
 @property (strong, nonatomic) NSMutableArray *collected;
 @property (strong, nonatomic) NSNumber *selected;
 @property (strong, nonatomic) GlassView *gview;
+@property (strong, nonatomic) ThoughtView *tview;
 @property (strong, nonatomic) FinishView *fview;
 @property (strong, nonatomic) EAGLView *glView;
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
@@ -46,9 +49,21 @@
     [self.view addSubview:titleView];
 }
 
+- (void) setupUIThought {
+    
+    UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
+    infoButton.frame = CGRectMake(230, 30, 70, 50);
+    infoButton.tintColor = [UIColor colorWithRed:236/255.0f green:28/255.0f blue:35/255.0f alpha:1.0f];
+    self.tview = [[ThoughtView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    [infoButton addSubview:_tview];
+    [infoButton sendSubviewToBack:_tview];
+    [infoButton addTarget:self action:@selector(didPressInfoButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:infoButton];
+}
+
 - (void) setupUIGlass {
     
-    self.gview = [[GlassView alloc] initWithFrame:CGRectMake(0, 80, 320, 320)];
+    self.gview = [[GlassView alloc] initWithFrame:CGRectMake(0, 100, 320, 320)];
     [self.view addSubview:self.gview];
     
 }
@@ -97,6 +112,7 @@
     [self getFound];
     [self setupUIGlass];
     [self setupUITitle];
+    [self setupUIThought];
     [self setupUIButtons];
     [self setupUIFinish];
     [self selectNextAvailableIngredient];
@@ -154,6 +170,12 @@
             }
         }
     }
+}
+
+-(void) didPressInfoButton:(UIButton *)sender {
+    
+    [self openWebBrowser:@"http://www.redant.com"];
+    
 }
 
 -(void) didEnterRegion:(NSNotification *)notif {
@@ -269,16 +291,26 @@
         
         [BeaconServices stopBeacons];
         
-        self.fview.title = @"Winning";
-        self.fview.description = @"You have found all of the ingredients, tap to take a selfie and collect your free drink!";
-        self.fview.ok = @"ok";
+        UIImage *selfie = [self getImageIfExists];
+        if (selfie) {
+            
+            [self showSelfie:selfie];
+            [self.view bringSubviewToFront:self.fview];
+            
+        } else {
+            
+            self.fview.title = @"Winning";
+            self.fview.description = @"You have found all of the ingredients, tap to take a selfie and collect your free drink!";
+            self.fview.ok = @"ok";
+            
+            [self.view bringSubviewToFront:self.fview];
+            [self startAnimation];
+            
+            self.imagePicker = [[UIImagePickerController alloc] init];
+            [self addSelfieButton];
+        }
+        
         self.fview.show = YES;
-        [self.view bringSubviewToFront:self.fview];
-        [self startAnimation];
-        
-        self.imagePicker = [[UIImagePickerController alloc] init];
-        
-        [self addSelfieButton];
         
     }
 }
@@ -431,24 +463,33 @@ static float defaultPath[41][2] = {
     [sender removeFromSuperview];
 }
 
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [self addSelfieButton];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     UIImage *img = [[info objectForKey:UIImagePickerControllerOriginalImage] resizedImageByMagick: @"604x604#"];
     
-    self.fview.selfie = img;
-    self.fview.ok = nil;
-    self.fview.description = @"Thanks, someone will deliver your drink soon!";
+    [self showSelfie:img];
     [picker dismissViewControllerAnimated:YES completion:nil];
     
     NSData *data = UIImageJPEGRepresentation(img, 0.6);
     NSString *encoded = [data base64EncodedStringWithOptions:kNilOptions];
 
-    //[self sendEmail:encoded];
+    [self sendEmail:encoded];
+    [self saveImageData:data];
 }
 
--(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [self addSelfieButton];
-    [picker dismissViewControllerAnimated:YES completion:nil];
+-(void)showSelfie:(UIImage *)selfie {
+    
+    self.fview.title = @"Winning";
+    self.fview.selfie = selfie;
+    self.fview.ok = nil;
+    self.fview.description = @"Thanks, someone will deliver your drink soon!";
 }
 
 -(void)sendEmail:(NSString *)image {
@@ -467,6 +508,48 @@ static float defaultPath[41][2] = {
         NSLog(@"Error: %@", error);
     }];
     
+}
+
+-(void) saveImageData:(NSData *)data {
+
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"selfie.jpg"];
+    [data writeToFile:filePath atomically:YES];
+}
+
+-(UIImage *) getImageIfExists {
+    
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"selfie.jpg"];
+    
+    NSFileManager *filemgr = [NSFileManager defaultManager];
+    
+    if ([filemgr fileExistsAtPath:filePath] == YES) {
+        return [UIImage imageWithContentsOfFile:filePath];
+    } else {
+        return nil;
+    }
+    
+}
+
+/**
+ *
+ * Open the RedAnt Webpage
+ *
+ */
+
+-(void)openWebBrowser:(NSString *)url {
+    
+    PBWebViewController *webViewController = [[PBWebViewController alloc] init];
+    webViewController.URL = [NSURL URLWithString:url];
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:webViewController];
+    webViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(closeWebView)];
+    [self presentViewController:nc animated:YES completion:nil];
+    
+}
+
+-(void)closeWebView {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-PBWebViewController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-UIImage-ResizeMagick.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>89131BD405464DEAA242ECD8</key>
+		<key>3D74020C450E40268E066658</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9E7701A6F6F3411CBAFBA44E</key>
+		<key>53373213EFA0498198493133</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C11D52201CA2426792F1D392</key>
+		<key>5493C87B2B9D42F582F61EF7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>642C2AD91040467DB0ED62D4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

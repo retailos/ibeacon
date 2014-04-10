@@ -51,8 +51,8 @@ PureSingleton(BeaconServices)
         [self.beaconManager startRangingBeaconsInRegion:self.beaconRegion];
         [self.beaconManager startMonitoringForRegion:self.beaconRegion];
         
-        //self.entered = YES;
-        //[self saveEntered];
+        self.entered = YES;
+        [self saveEntered];
         
         if (!self.entered) {
             

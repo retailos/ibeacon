@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5493C87B2B9D42F582F61EF7"
-               BuildableName = "libPods-UIImage-ResizeMagick.a"
-               BlueprintName = "Pods-UIImage-ResizeMagick"
+               BlueprintIdentifier = "53373213EFA0498198493133"
+               BuildableName = "libPods-PBWebViewController.a"
+               BlueprintName = "Pods-PBWebViewController"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

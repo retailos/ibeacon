@@ -18,14 +18,17 @@ PODS:
   - AFNetworking/UIKit (2.2.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - PBWebViewController (0.1)
   - UIImage-ResizeMagick (0.0.1)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
+  - PBWebViewController (~> 0.1)
   - UIImage-ResizeMagick
 
 SPEC CHECKSUMS:
   AFNetworking: 0121f4b69be3fa58d1ab317866e036e12ac9651d
+  PBWebViewController: 8a84b04caf635691335e3b449034dc0e9c1967c8
   UIImage-ResizeMagick: 7160e4551e9a558b67c997f616454339fd1d3a8d
 
 COCOAPODS: 0.29.0

@@ -16,6 +16,7 @@
 {
     [BeaconServices setupBeacons:@[@"42946",@"31891",@"15692"]];
     
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
  
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

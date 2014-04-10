@@ -48,6 +48,12 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 2
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 1
 
+// PBWebViewController
+#define COCOAPODS_POD_AVAILABLE_PBWebViewController
+#define COCOAPODS_VERSION_MAJOR_PBWebViewController 0
+#define COCOAPODS_VERSION_MINOR_PBWebViewController 1
+#define COCOAPODS_VERSION_PATCH_PBWebViewController 0
+
 // UIImage-ResizeMagick
 #define COCOAPODS_POD_AVAILABLE_UIImage_ResizeMagick
 #define COCOAPODS_VERSION_MAJOR_UIImage_ResizeMagick 0

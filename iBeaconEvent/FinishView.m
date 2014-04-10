@@ -23,6 +23,7 @@
     if (self) {
         self.userInteractionEnabled = NO;
         self.backgroundColor = [UIColor clearColor];
+        self.alpha = 0.0f;
     }
     return self;
 }
@@ -45,6 +46,14 @@
     
     _show = show;
     [self setNeedsDisplay];
+    
+    [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
+        
+        self.alpha = _show;
+        
+    } completion:^(BOOL completed){
+        
+    }];
 
 }
 
