@@ -19,6 +19,9 @@
 #import "UIImage+ResizeMagick.h"
 #import "AFNetworking.h"
 #import "PBWebViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import <Social/Social.h>
+#import <Accounts/Accounts.h>
 
 
 @interface MainViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
@@ -45,27 +48,66 @@
 }
 
 - (void) setupUITitle {
-    TitleView *titleView = [[TitleView alloc] initWithFrame:CGRectMake(0, 30, 320, 100)];
+    
+    float y = 20;
+    if (IS_IPHONE_4_INCH) {
+        y = 48;
+    }
+    
+    TitleView *titleView = [[TitleView alloc] initWithFrame:CGRectMake(-10, y, 320, 100)];
     [self.view addSubview:titleView];
 }
 
 - (void) setupUIThought {
     
-    UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
-    infoButton.frame = CGRectMake(230, 30, 70, 50);
+    float y = 20;
+    if (IS_IPHONE_4_INCH) {
+        y = 40;
+    }
+    
+    UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImageView *infoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"i-icon.png"]];
+    infoImage.frame = CGRectMake(22, 12, 25, 25);
+    infoImage.userInteractionEnabled = NO;
+    [infoButton addSubview:infoImage];
+    infoButton.frame = CGRectMake(230, y, 70, 50);
     infoButton.tintColor = [UIColor colorWithRed:236/255.0f green:28/255.0f blue:35/255.0f alpha:1.0f];
     self.tview = [[ThoughtView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     [infoButton addSubview:_tview];
     [infoButton sendSubviewToBack:_tview];
     [infoButton addTarget:self action:@selector(didPressInfoButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:infoButton];
+    infoButton.layer.zPosition = MAXFLOAT;
+    
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+    {
+        infoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        UIImageView *infoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"twitter.png"]];
+        infoImage.frame = CGRectMake(21, 12, 31, 25);
+        infoImage.userInteractionEnabled = NO;
+        [infoButton addSubview:infoImage];
+
+        infoButton.frame = CGRectMake(20, y, 70, 50);
+        infoButton.tintColor = [UIColor colorWithRed:236/255.0f green:28/255.0f blue:35/255.0f alpha:1.0f];
+        self.tview = [[ThoughtView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+        [infoButton addSubview:_tview];
+        [infoButton sendSubviewToBack:_tview];
+        [infoButton addTarget:self action:@selector(tweetButton:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:infoButton];
+        infoButton.layer.zPosition = MAXFLOAT;
+    }
 }
 
 - (void) setupUIGlass {
     
-    self.gview = [[GlassView alloc] initWithFrame:CGRectMake(0, 100, 320, 320)];
-    [self.view addSubview:self.gview];
+    if (IS_IPHONE_4_INCH) {
+        self.gview = [[GlassView alloc] initWithFrame:CGRectMake(0, 100, 320, 320)];
+    } else {
+        self.gview = [[GlassView alloc] initWithFrame:CGRectMake(0, 60, 320, 320)];
+    }
     
+    [self.view addSubview:self.gview];
 }
 
 - (void)setupUIButtons {
@@ -75,8 +117,12 @@
     float beacons = ingredients.count,
           width = (self.view.frame.size.width / beacons),
           height = 140.0f,
-          y = self.view.frame.size.height - height;
+          y = self.view.bounds.size.height - 150.0f;
     
+    if (IS_IPHONE_35_INCH) {
+        y = y + 30.0f;
+    }
+
     for (int i = 0; i < beacons; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake((i * width), y, width, height);
@@ -98,6 +144,7 @@
 - (void) setupUIFinish {
     self.fview = [[FinishView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:_fview];
+    //_fview.layer.zPosition = MAXFLOAT - 1.00f;
 }
 
 - (void)viewDidLoad
@@ -106,26 +153,36 @@
     
     self.view.backgroundColor = [UIColor colorWithRed:236/255.0f green:28/255.0f blue:35/255.0f alpha:1.0f];
 
-    //self.collected = [@[@YES, @YES, @YES] mutableCopy];
-    //[self saveFound];
-    
-    [self getFound];
-    [self setupUIGlass];
-    [self setupUITitle];
-    [self setupUIThought];
-    [self setupUIButtons];
-    [self setupUIFinish];
-    [self selectNextAvailableIngredient];
-    [self checkEnteredRegion];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateDistance:) name:@"com.redant.distanceChanged" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterRegion:) name:@"com.redant.entered" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResign) name:UIApplicationWillResignActiveNotification object:NULL];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (!self.gview) {
+        [self getFound];
+        [self setupUIGlass];
+        [self setupUITitle];
+        [self setupUIThought];
+        [self setupUIButtons];
+        [self setupUIFinish];
+        [self selectNextAvailableIngredient];
+        [self checkEnteredRegion];
+    }
+   
+}
+
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self checkAllIngredientsFound];
+    
+    int found = [self countFound];
+    if (found > 0) {
+        [self.gview animateWave:found];
+    }
+    
     
     if ([self getEntered]) {
         [self didEnterRegion:nil];
@@ -152,7 +209,7 @@
 -(void) didPressIngredientButton:(UIButton *)button {
     
     //if the finish view is not being shown then enable the buttons
-    if (!self.fview.show) {
+    if (!self.fview.show && [self.selected intValue] != (button.tag - 100)) {
         
         BeaconButton *bbutton = (BeaconButton *)[self.view viewWithTag:100 + button.tag];
         
@@ -174,16 +231,25 @@
 
 -(void) didPressInfoButton:(UIButton *)sender {
     
-    [self openWebBrowser:@"http://www.redant.com"];
+    [self openWebBrowser:@"http://www.redant.com/beacons"];
     
 }
 
 -(void) didEnterRegion:(NSNotification *)notif {
     
     if ([self countFound] < self.collected.count) {
-        self.fview.show = NO;
+        self.fview.title = @"How to Play!";
+        self.fview.description = @"Tap an ingredient below to see how far away it is - get within 1m to add it to your Beaconini. Good luck!";
+        self.fview.ok = @"OK";
+        [self addStartButton];
     }
     
+}
+
+-(IBAction)start:(UIButton *)sender {
+    
+    [sender removeFromSuperview];
+    self.fview.show = NO;
 }
 
 -(void) didUpdateDistance:(NSNotification *)notif {
@@ -222,7 +288,7 @@
             break;
             
         default:
-            return @"Cold";
+            return @"Too Far";
             break;
     }
 }
@@ -293,15 +359,16 @@
         
         UIImage *selfie = [self getImageIfExists];
         if (selfie) {
-            
-            [self showSelfie:selfie];
+        
             [self.view bringSubviewToFront:self.fview];
+            [self showSelfie:selfie];
+            
             
         } else {
             
-            self.fview.title = @"Winning";
-            self.fview.description = @"You have found all of the ingredients, tap to take a selfie and collect your free drink!";
-            self.fview.ok = @"ok";
+            self.fview.title = @"Winner!";
+            self.fview.description = @"Take a selfie (only so we can find you), and wait for your free Beaconini!";
+            self.fview.ok = @"OK";
             
             [self.view bringSubviewToFront:self.fview];
             [self startAnimation];
@@ -319,6 +386,27 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0, 110, 320, 290);
     [button addTarget:self action:@selector(takePicture:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+}
+
+-(void) addPlayAgainButton {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(190, 280, 120, 120);
+    [button addTarget:self action:@selector(resetData:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+}
+
+-(void) addTwitterButton {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(190, 280, 120, 120);
+    [button addTarget:self action:@selector(resetData:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+}
+
+-(void) addStartButton {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(190, 280, 120, 120);
+    [button addTarget:self action:@selector(start:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
 }
 
@@ -410,6 +498,7 @@ static float defaultPath[41][2] = {
 - (void)startAnimation {
     
     self.glView = [[EAGLView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.glView.userInteractionEnabled = NO;
     _glView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin;
     [self.view addSubview:_glView];
     [_glView startAnimation];
@@ -488,8 +577,10 @@ static float defaultPath[41][2] = {
     
     self.fview.title = @"Winning";
     self.fview.selfie = selfie;
-    self.fview.ok = nil;
-    self.fview.description = @"Thanks, someone will deliver your drink soon!";
+    self.fview.ok = @"yes";
+    self.fview.description = @"Thanks, someone will deliver your drink soon, would you like to play again?";
+    
+    [self addPlayAgainButton];
 }
 
 -(void)sendEmail:(NSString *)image {
@@ -498,7 +589,7 @@ static float defaultPath[41][2] = {
     
     NSString *html = [NSString stringWithFormat:@"<img src='data:image/png;base64, %@' width='302px' height='302px'/>", image];
     
-    NSDictionary *to = @{@"email": @"stephen.keep@redant.com", @"name":@"Stephen Keep", @"type":@"to"};
+    NSDictionary *to = @{@"email": @"fashtech@redant.com", @"name":@"Fash Tech", @"type":@"to"};
     NSDictionary *message = @{@"from_email": @"retailosdev@redant.com", @"autotext": @"true", @"subject": @"Free Drink", @"html": html, @"to": @[to]};
     NSDictionary *parameters = @{@"key": @"qXkX37-1JLhbbRPPKODWMg", @"message": message};
     
@@ -550,6 +641,50 @@ static float defaultPath[41][2] = {
 
 -(void)closeWebView {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+/**
+ *
+ * RESET DATA TO PLAY AGAIN
+ *
+ */
+
+
+-(IBAction)resetData:(UIButton *)sender {
+    
+    [sender removeFromSuperview];
+    
+    self.collected = [@[@NO, @NO, @NO] mutableCopy];
+    [self saveFound];
+    
+    for (int i = 0; i < 3; i++) {
+        BeaconButton *button = (BeaconButton *)[self.view viewWithTag:200 + i];
+        button.distance = @"";
+        button.selected = NO;
+        button.collected = NO;
+    }
+    
+    [self.gview animateWave:0];
+    [self selectNextAvailableIngredient];
+
+    
+    self.fview.show = NO;
+}
+
+/**
+ *
+ * SHOW TWITTER BUTTON
+ *
+ */
+
+-(IBAction)tweetButton:(UIButton *)sender {
+    
+    
+    SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+    [tweetSheet setInitialText:@"Enjoying a #fashtech Beaconini with @red_ant #ibeacons"];
+        
+    [self presentViewController:tweetSheet animated:YES completion:nil];
+    
 }
 
 @end

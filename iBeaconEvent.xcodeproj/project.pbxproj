@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1847BF7CC4FC48B28210114D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51BCE88BA9D4481CBB701456 /* libPods.a */; };
+		34484A9618FC01EF00480A3F /* i-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34484A9518FC01EF00480A3F /* i-icon@2x.png */; };
+		34484A9818FC2DA100480A3F /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34484A9718FC2DA100480A3F /* Social.framework */; };
+		34484A9C18FC336600480A3F /* twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34484A9B18FC336600480A3F /* twitter@2x.png */; };
 		34A40D3C18F6EE8C00F6F04A /* ThoughtView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A40D3B18F6EE8C00F6F04A /* ThoughtView.m */; };
 		34C2B0F118F2DF1000840956 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34C2B0F018F2DF1000840956 /* Foundation.framework */; };
 		34C2B0F318F2DF1000840956 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34C2B0F218F2DF1000840956 /* CoreGraphics.framework */; };
@@ -64,6 +67,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		34484A9518FC01EF00480A3F /* i-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "i-icon@2x.png"; sourceTree = "<group>"; };
+		34484A9718FC2DA100480A3F /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		34484A9B18FC336600480A3F /* twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter@2x.png"; sourceTree = "<group>"; };
 		34A40D3A18F6EE8C00F6F04A /* ThoughtView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoughtView.h; sourceTree = "<group>"; };
 		34A40D3B18F6EE8C00F6F04A /* ThoughtView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoughtView.m; sourceTree = "<group>"; };
 		34C2B0ED18F2DF1000840956 /* iBeaconEvent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iBeaconEvent.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,6 +148,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34484A9818FC2DA100480A3F /* Social.framework in Frameworks */,
 				34C2B17F18F53CC800840956 /* libz.dylib in Frameworks */,
 				34C2B17D18F53C9700840956 /* OpenGLES.framework in Frameworks */,
 				34C2B13F18F2F5D600840956 /* QuartzCore.framework in Frameworks */,
@@ -192,6 +199,7 @@
 		34C2B0EF18F2DF1000840956 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				34484A9718FC2DA100480A3F /* Social.framework */,
 				34C2B17E18F53CC800840956 /* libz.dylib */,
 				34C2B17C18F53C9700840956 /* OpenGLES.framework */,
 				34C2B13E18F2F5D600840956 /* QuartzCore.framework */,
@@ -305,6 +313,8 @@
 		34C2B14018F41D5900840956 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				34484A9B18FC336600480A3F /* twitter@2x.png */,
+				34484A9518FC01EF00480A3F /* i-icon@2x.png */,
 				34C2B14C18F435B300840956 /* glass@2x.png */,
 				34C2B14718F4319700840956 /* Lobster.ttf */,
 				34C2B15218F4521E00840956 /* waves@2x.png */,
@@ -428,10 +438,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				34C2B17218F53A8A00840956 /* emitter.pex in Resources */,
+				34484A9618FC01EF00480A3F /* i-icon@2x.png in Resources */,
 				34C2B14518F41D6D00840956 /* ice@2x.png in Resources */,
 				34C2B14818F4319700840956 /* Lobster.ttf in Resources */,
 				34C2B17718F53A8A00840956 /* particleTexture.png in Resources */,
 				34C2B14418F41D6D00840956 /* booze@2x.png in Resources */,
+				34484A9C18FC336600480A3F /* twitter@2x.png in Resources */,
 				34C2B14D18F435B300840956 /* glass@2x.png in Resources */,
 				34C2B0FB18F2DF1100840956 /* InfoPlist.strings in Resources */,
 				34C2B15318F4521E00840956 /* waves@2x.png in Resources */,
@@ -632,6 +644,7 @@
 					"$(PROJECT_DIR)/iBeaconEvent",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "FF620AE7-85F1-41BB-BEFA-1455C580D9A3";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -651,6 +664,7 @@
 					"$(PROJECT_DIR)/iBeaconEvent",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "FF620AE7-85F1-41BB-BEFA-1455C580D9A3";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

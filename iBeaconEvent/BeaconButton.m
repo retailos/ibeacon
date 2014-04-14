@@ -28,7 +28,7 @@ static size_t const kDashedCount            = (2.0f);
     self = [super initWithFrame:frame];
     if (self) {
         self.userInteractionEnabled = NO;
-        
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
@@ -68,7 +68,7 @@ static size_t const kDashedCount            = (2.0f);
     _collected = collected;
     
     if (_collected) {
-        _distance = @"tick";
+        _distance = @"Found";
     }
     
     [self setNeedsDisplay];
@@ -96,18 +96,20 @@ static size_t const kDashedCount            = (2.0f);
 
 - (void)drawRect:(CGRect)rect
 {
-    [[UIColor colorWithRed:236/255.0f green:28/255.0f blue:35/255.0f alpha:1.0f]setFill];
+    [[UIColor clearColor] setFill];
     [[UIColor whiteColor] setStroke];
     UIRectFill(rect);
     
+    [[UIColor colorWithRed:236/255.0f green:28/255.0f blue:35/255.0f alpha:1.0f]setFill];
+    
     CGRect circleRect = CGRectMake(rect.origin.x + 9.0f, rect.origin.y + 9.0f, rect.size.width - 18.0f, rect.size.width - 18.0f);
     CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextSetInterpolationQuality(ctx, kCGInterpolationHigh);
     CGContextAddEllipseInRect(ctx, circleRect);
     
-    CGRect imgRect = CGRectMake(rect.size.width/2 - 30.0f, circleRect.size.height/2 - 22.0f, 60.0f, 60.0f);
     UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png",[_title lowercaseString]]];
-    [img drawInRect:imgRect];
-    
+    [img drawAtPoint:(CGPointMake(24, 24))];
+
     if (_collected || _selected) {
         [[UIColor colorWithWhite:1.0f alpha:0.8f] setFill];
         CGContextFillPath(ctx);
@@ -120,9 +122,9 @@ static size_t const kDashedCount            = (2.0f);
     CGContextStrokePath(ctx);
     
     if (_selected || _distance) {
-        CGRect titleRect = CGRectMake(0, (circleRect.size.height/2) - 15.0f, rect.size.width, 38.0f);
+        CGRect titleRect = CGRectMake(0, (circleRect.size.height/2) - 10.0f, rect.size.width, 38.0f);
         NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-        UIFont *font = [UIFont fontWithName:@"Lobster" size:36.0f];
+        UIFont *font = [UIFont fontWithName:@"Lobster" size:28.0f];
         [style setAlignment:NSTextAlignmentCenter];
         NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:font,NSFontAttributeName,style,NSParagraphStyleAttributeName,[UIColor colorWithRed:236/255.0f green:28/255.0f blue:35/255.0f alpha:1.0f],NSForegroundColorAttributeName, nil];
         [_distance drawInRect:titleRect withAttributes:attr];

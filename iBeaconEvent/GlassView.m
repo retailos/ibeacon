@@ -23,6 +23,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
+        self.userInteractionEnabled = NO;
         [self setupWaves];
         
         UIImage *img = [UIImage imageNamed:@"glass.png"];
@@ -48,8 +49,10 @@
 - (void) animateWave:(int)divide {
     
     float x, y;
-    
-    if (divide == 1) {
+    if (divide == 0) {
+        x = 0;
+        y = 230;
+    } else if (divide == 1) {
         x = 40;
         y = 174;
     } else if (divide == 2) {

@@ -57,7 +57,7 @@ PureSingleton(BeaconServices)
         if (!self.entered) {
             
             // create location region object (you can additionaly pass major / minor values)
-            CLLocationCoordinate2D center = CLLocationCoordinate2DMake(51.527946, -0.078803);
+            CLLocationCoordinate2D center = CLLocationCoordinate2DMake(51.507400, -0.219894);
             CLLocationDistance radius = 200; // 200 meters
             CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:center radius:radius identifier:@"Event"];
             
@@ -86,7 +86,7 @@ PureSingleton(BeaconServices)
 }
 
 + (void)stopBeacons {
-    [[BeaconServices shared] stopBeacons];
+    //[[BeaconServices shared] stopBeacons];
 }
 
 - (void) selectBeacon:(int)beacon {

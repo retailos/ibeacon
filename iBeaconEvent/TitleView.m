@@ -7,6 +7,7 @@
 //
 
 #import "TitleView.h"
+#import <Social/Social.h>
 
 @implementation TitleView
 
@@ -14,6 +15,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.userInteractionEnabled = NO;
         self.backgroundColor = [UIColor clearColor];
     }
     return self;
@@ -27,14 +29,24 @@
     //ROTATE THE VIEW
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextConcatCTM(ctx, CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(5)));
-    CGContextConcatCTM(ctx, CGAffineTransformMakeTranslation(10, 28));
+    CGContextConcatCTM(ctx, CGAffineTransformMakeTranslation(10, 10));
     
-    CGRect titleRect = CGRectMake(0, 0, rect.size.width, 100.0f);
+    CGRect titleRect = CGRectMake(80, 12, rect.size.width, 100.0f);
     NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     UIFont *font = [UIFont fontWithName:@"Lobster" size:22.0f];
     [style setAlignment:NSTextAlignmentCenter];
     NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:font,NSFontAttributeName,style,NSParagraphStyleAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil];
-    [@"Talking about iBeacons?" drawInRect:titleRect withAttributes:attr];
+    [@"Want iBeacons?" drawInRect:titleRect withAttributes:attr];
+    
+    
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+    {
+    
+        CGContextConcatCTM(ctx, CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(-10)));
+        CGContextConcatCTM(ctx, CGAffineTransformMakeTranslation(10, 10));
+        titleRect = CGRectMake(-110, 26, rect.size.width, 100.0f);
+        [@"Tweet this!" drawInRect:titleRect withAttributes:attr];
+    }
     
     
 }

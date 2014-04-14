@@ -63,7 +63,7 @@
     
     if (_show) {
         
-        [[UIColor colorWithWhite:0.0f alpha:0.4f] setFill];
+        [[UIColor colorWithWhite:0.0f alpha:0.8f] setFill];
         UIRectFill(rect);
         
         //ROTATE THE VIEW
@@ -106,7 +106,7 @@
         //DISPLAY SELFIE
         if (self.selfie) {
             CGContextConcatCTM(ctx, CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(20)));
-            CGRect imgRect = CGRectMake(200.0f, 200.0f, 160, 160);
+            CGRect imgRect = CGRectMake(80.0f, 280.0f, 160, 160);
             UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:imgRect cornerRadius: 80];
             [[UIColor whiteColor] setStroke];
             [path setLineWidth:8.0];

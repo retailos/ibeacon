@@ -23,3 +23,8 @@ dispatch_once(&onceToken, ^{ __main = [[className alloc] init]; }); \
 return __main; }
 
 #define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
+
+#define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+#define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define IS_IPHONE_4_INCH (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height > 500.0f)
+#define IS_IPHONE_35_INCH (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height < 500.0f)
