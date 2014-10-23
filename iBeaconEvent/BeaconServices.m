@@ -38,6 +38,8 @@ PureSingleton(BeaconServices)
         self.ingredients = @[@"Booze", @"Ice", @"Juice"];
         self.notified = [@[@NO, @NO, @NO] mutableCopy];
         
+        CBCentralManager* testBluetooth = [[CBCentralManager alloc] initWithDelegate:nil queue: nil];
+        
         // create manager instance
         self.beaconManager = [[ESTBeaconManager alloc] init];
         self.beaconManager.delegate = self;
@@ -51,8 +53,8 @@ PureSingleton(BeaconServices)
         [self.beaconManager startRangingBeaconsInRegion:self.beaconRegion];
         [self.beaconManager startMonitoringForRegion:self.beaconRegion];
         
-        //self.entered = YES;
-        //[self saveEntered];
+        self.entered = YES;
+        [self saveEntered];
         
         if (!self.entered) {
             

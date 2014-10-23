@@ -681,7 +681,7 @@ static float defaultPath[41][2] = {
     
     
     SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-    [tweetSheet setInitialText:@"Enjoying a #fashtech Beaconini with @red_ant #ibeacons"];
+    [tweetSheet setInitialText:@"Enjoying a #FashTechLDN Beaconini with @red_ant #ibeacons"];
         
     [self presentViewController:tweetSheet animated:YES completion:nil];
     

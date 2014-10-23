@@ -11,6 +11,8 @@
 		34484A9618FC01EF00480A3F /* i-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34484A9518FC01EF00480A3F /* i-icon@2x.png */; };
 		34484A9818FC2DA100480A3F /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34484A9718FC2DA100480A3F /* Social.framework */; };
 		34484A9C18FC336600480A3F /* twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34484A9B18FC336600480A3F /* twitter@2x.png */; };
+		34484A9F18FD2BDC00480A3F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34484A9D18FD2BDC00480A3F /* Default-568h@2x.png */; };
+		34484AA018FD2BDC00480A3F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34484A9E18FD2BDC00480A3F /* Default@2x.png */; };
 		34A40D3C18F6EE8C00F6F04A /* ThoughtView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A40D3B18F6EE8C00F6F04A /* ThoughtView.m */; };
 		34C2B0F118F2DF1000840956 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34C2B0F018F2DF1000840956 /* Foundation.framework */; };
 		34C2B0F318F2DF1000840956 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34C2B0F218F2DF1000840956 /* CoreGraphics.framework */; };
@@ -70,6 +72,8 @@
 		34484A9518FC01EF00480A3F /* i-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "i-icon@2x.png"; sourceTree = "<group>"; };
 		34484A9718FC2DA100480A3F /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		34484A9B18FC336600480A3F /* twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter@2x.png"; sourceTree = "<group>"; };
+		34484A9D18FD2BDC00480A3F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		34484A9E18FD2BDC00480A3F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		34A40D3A18F6EE8C00F6F04A /* ThoughtView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoughtView.h; sourceTree = "<group>"; };
 		34A40D3B18F6EE8C00F6F04A /* ThoughtView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoughtView.m; sourceTree = "<group>"; };
 		34C2B0ED18F2DF1000840956 /* iBeaconEvent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iBeaconEvent.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -237,6 +241,8 @@
 			children = (
 				34C2B13118F2EE9600840956 /* Estimote */,
 				34C2B10218F2DF1100840956 /* Images.xcassets */,
+				34484A9D18FD2BDC00480A3F /* Default-568h@2x.png */,
+				34484A9E18FD2BDC00480A3F /* Default@2x.png */,
 				34C2B0F818F2DF1100840956 /* iBeaconEvent-Info.plist */,
 				34C2B0F918F2DF1100840956 /* InfoPlist.strings */,
 				34C2B0FC18F2DF1100840956 /* main.m */,
@@ -437,6 +443,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34484AA018FD2BDC00480A3F /* Default@2x.png in Resources */,
 				34C2B17218F53A8A00840956 /* emitter.pex in Resources */,
 				34484A9618FC01EF00480A3F /* i-icon@2x.png in Resources */,
 				34C2B14518F41D6D00840956 /* ice@2x.png in Resources */,
@@ -445,6 +452,7 @@
 				34C2B14418F41D6D00840956 /* booze@2x.png in Resources */,
 				34484A9C18FC336600480A3F /* twitter@2x.png in Resources */,
 				34C2B14D18F435B300840956 /* glass@2x.png in Resources */,
+				34484A9F18FD2BDC00480A3F /* Default-568h@2x.png in Resources */,
 				34C2B0FB18F2DF1100840956 /* InfoPlist.strings in Resources */,
 				34C2B15318F4521E00840956 /* waves@2x.png in Resources */,
 				34C2B12318F2DF4A00840956 /* MainViewController.xib in Resources */,
